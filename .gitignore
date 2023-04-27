@@ -1,2 +1,8 @@
 #Utils folder
 /utils
+
+
+#BACK-END
+
+#Spring Meta-Data
+/back-end-layer/.metadata/
