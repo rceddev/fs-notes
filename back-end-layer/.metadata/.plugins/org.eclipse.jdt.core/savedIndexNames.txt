@@ -1,1 +1,0 @@
-INDEX VERSION 1.131+/home/robert/Documents/Development/project-fs-notes/back-end-layer/.metadata/.plugins/org.eclipse.jdt.core
