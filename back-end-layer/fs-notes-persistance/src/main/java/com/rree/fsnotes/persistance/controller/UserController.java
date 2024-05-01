@@ -25,7 +25,13 @@ public class UserController {
 	public User getUserById(@PathVariable Integer id) {
 		return userService.getUserById(id);
 	}
-	
+
+	@GetMapping("/user/email/{email}")
+	public User getUserById(@PathVariable String email) {
+		return userService.getUserByEmail(email);
+	}
+
+
 	@PostMapping("/user")
 	public ResponseEntity<User> saveUser( @Valid @RequestBody User user) {
 		return userService.saveUser(user);

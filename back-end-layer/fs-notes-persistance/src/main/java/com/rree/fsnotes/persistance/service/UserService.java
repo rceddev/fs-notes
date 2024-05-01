@@ -32,4 +32,10 @@ public class UserService {
 		return new ResponseEntity<>(savedUser, 	HttpStatus.OK);
 		
 	}
+
+	public User getUserByEmail(String email) {
+		System.out.println("Finding email:" + email);
+		return userRepository.findByEmail(email)
+				.orElseThrow(() -> new CustomExceptionHandler.UserNotFoundException("email:" + email + " Not found"));
+	}
 }
