@@ -2,14 +2,21 @@ package com.rree.fsnotes.auth.service;
 
 import com.rree.fsnotes.auth.model.*;
 import com.rree.fsnotes.auth.restclients.FSPersistanceClient;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 
@@ -28,6 +35,9 @@ public class AuthService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     Logger logger = LoggerFactory.getLogger(AuthService.class);
 
@@ -51,5 +61,33 @@ public class AuthService {
                 .user(persistanceClient.registUser(userToRegister))
                 .token(jwtService.getToken(userToRegister))
                 .build();
+    }
+
+    public ResponseEntity<String> validateToken(String token, HttpServletRequest request) {
+
+        if (token == null) {
+            return new ResponseEntity<>("Not token provided", HttpStatus.UNAUTHORIZED);
+        }
+        String userEmail = jwtService.getEmail(token);
+
+        if (userEmail != null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
+            if (!jwtService.isTokenValid(token, userDetails)) {
+                return new ResponseEntity<>("Token not valid", HttpStatus.UNAUTHORIZED);
+            }
+
+            if ( SecurityContextHolder.getContext().getAuthentication() == null){
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        } else {
+            return new ResponseEntity<>("Token not valid", HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

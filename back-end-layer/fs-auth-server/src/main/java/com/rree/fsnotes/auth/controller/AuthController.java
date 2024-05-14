@@ -5,8 +5,10 @@ import java.util.Map;
 
 import com.rree.fsnotes.auth.model.*;
 import com.rree.fsnotes.auth.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -32,6 +34,11 @@ public class AuthController {
 	@PostMapping(value = "register")
 	public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest){
 		return ResponseEntity.ok(authService.register(registerRequest));
+	}
+
+	@PostMapping(value = "validateToken")
+	public ResponseEntity<String> validateToken(@RequestBody AuthValidateTokenRequest validateTokenRequest, HttpServletRequest request){
+		return authService.validateToken(validateTokenRequest.getToken(), request);
 	}
 
 	
