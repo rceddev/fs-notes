@@ -30,9 +30,8 @@ public class NoteService {
 		note.setUser(user);
 		note.setCreated(new Timestamp(System.currentTimeMillis()));
 		note.setUpdated(new Timestamp(System.currentTimeMillis()));
-		
-		Note noteSaved = noteRepository.save(note);
-		return noteSaved;
+
+        return noteRepository.save(note);
 	}
 
 	public Note getNote(Integer idUser, Integer idNote) {
@@ -69,5 +68,55 @@ public class NoteService {
 		noteToUpdate.setUpdated(new Timestamp(System.currentTimeMillis()));
 		
 		return noteRepository.save(noteToUpdate);
+	}
+
+	public Note getNote(String email, Integer idNote) {
+		User user = userService.getUserByEmail(email);
+
+		Note note = user.getNotes()
+				.stream()
+				.filter( id -> id.getIdNote().equals(idNote))
+				.findFirst()
+				.orElse(null);
+
+		if(note == null)
+			throw new CustomExceptionHandler.NoteNotFoundException("Note:" + idNote + " not found");
+		return note;
+	}
+
+	public Note saveNote(String email, Note note) {
+		User user = userService.getUserByEmail(email);
+
+		note.setUser(user);
+		note.setCreated(new Timestamp(System.currentTimeMillis()));
+		note.setUpdated(new Timestamp(System.currentTimeMillis()));
+
+		return noteRepository.save(note);
+	}
+
+	public Note updateNote(String email, Integer idNote, Note note) {
+		//TODO: Use exits validation instead of saving object in memory
+		User user = userService.getUserByEmail(email);
+
+		//TODO; User noteRepository to get note
+		Note noteToUpdate = user.getNotes()
+				.stream()
+				.filter( id -> id.getIdNote().equals(idNote))
+				.findFirst()
+				.orElse(null);
+
+		if(noteToUpdate == null)
+			throw new CustomExceptionHandler.NoteNotFoundException("Note:" + idNote + " not found");
+
+		noteToUpdate.setTitle(note.getTitle());
+		noteToUpdate.setContent(note.getContent());
+		noteToUpdate.setUpdated(new Timestamp(System.currentTimeMillis()));
+
+		return noteRepository.save(noteToUpdate);
+	}
+
+	public List<Note> getAllNotes(String email) {
+		User user = userService.getUserByEmail(email);
+		return user.getNotes();
 	}
 }

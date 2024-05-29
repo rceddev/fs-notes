@@ -1,5 +1,7 @@
 package com.rree.fsnotes.persistance.controller;
 
+import com.rree.fsnotes.persistance.utils.AuthValidationService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,22 +21,14 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	
+
+	@Autowired
+	private AuthValidationService authValidationService;
+
 	@GetMapping("/user/{id}")
-	public User getUserById(@PathVariable Integer id) {
+	public User getUserById(@PathVariable Integer id, HttpServletRequest request) {
+		authValidationService.validateToken(request);
 		return userService.getUserById(id);
-	}
-
-	@GetMapping("/user/email/{email}")
-	public User getUserById(@PathVariable String email) {
-		return userService.getUserByEmail(email);
-	}
-
-
-	@PostMapping("/user")
-	public ResponseEntity<User> saveUser( @Valid @RequestBody User user) {
-		return userService.saveUser(user);
 	}
 	
 }

@@ -6,15 +6,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(value = "fs-persistance", url = "http://localhost:8768/")
+@FeignClient(value = "fs-persistance", url = "http://localhost:8768/secure")
 public interface FSPersistanceClient {
     @RequestMapping(method = RequestMethod.POST, value = "/user")
     User registUser(User userToRegister);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/user/{id}")
-    User getUserById(@PathVariable("id") Integer id);
-
-    @RequestMapping(method = RequestMethod.GET, value = "/user/email/{email}")
+    @RequestMapping(method = RequestMethod.GET, value = "/user/{email}")
     User getUserByEmail(@PathVariable("email") String email);
 
 }

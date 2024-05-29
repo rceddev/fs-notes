@@ -2,6 +2,8 @@ package com.rree.fsnotes.persistance.controller;
 
 import java.util.List;
 
+import com.rree.fsnotes.persistance.utils.AuthValidationService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,9 @@ public class NoteController {
 	
 	@Autowired
 	private NoteService noteService;
+
+	@Autowired
+	private AuthValidationService authValidationService;
 	
 	@GetMapping("/user/{idUser}/notes")
 	public List<Note> getAllNotes(@PathVariable Integer idUser){
@@ -39,5 +44,29 @@ public class NoteController {
 	@PutMapping("/user/{idUser}/notes/{idNote}")
 	public Note updateNote(@PathVariable Integer idUser, @PathVariable Integer idNote, @Valid @RequestBody Note note) {
 		return noteService.updateNote(idUser, idNote, note);
+	}
+
+	@GetMapping("/notes")
+	public List<Note> getAllNotes(HttpServletRequest request){
+		String email = authValidationService.validateToken(request);
+		return noteService.getAllNotes(email);
+	}
+
+	@GetMapping("/note/{idNote}")
+	public Note getNote(HttpServletRequest request, @PathVariable Integer idNote){
+		String email = authValidationService.validateToken(request);
+		return noteService.getNote(email, idNote);
+	}
+
+	@PostMapping("/note")
+	public Note saveNote(@Valid @RequestBody Note note, HttpServletRequest request){
+		String email = authValidationService.validateToken(request);
+		return noteService.saveNote(email, note);
+	}
+
+	@PutMapping("/note/{idNote}")
+	public Note updateNote(@PathVariable Integer idNote, @Valid @RequestBody Note note, HttpServletRequest request) {
+		String email = authValidationService.validateToken(request);
+		return noteService.updateNote(email, idNote, note);
 	}
 }

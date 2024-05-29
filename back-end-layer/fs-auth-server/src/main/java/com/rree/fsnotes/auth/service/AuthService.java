@@ -88,6 +88,6 @@ public class AuthService {
         } else {
             return new ResponseEntity<>("Token not valid", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+        return new ResponseEntity<>(userEmail, HttpStatus.OK);
     }
 }
