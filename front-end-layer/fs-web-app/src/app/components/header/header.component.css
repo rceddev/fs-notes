@@ -1,0 +1,17 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+.custom-mat-toolbar {
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
+}
+
+.example-icon {
+    background-color: white;
+    border: none;
+}
+.example-icon:hover {
+    background-color: rgb(221, 220, 220);
+    border: none;
+    border-radius: 50%;
+}
