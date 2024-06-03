@@ -30,7 +30,7 @@ export const routes: Routes = [
         component: OptionsComponent
     },
     {
-        path: 'panel',
+        path: '',
         title: 'Panel Page',
         component: PanelComponent
     },

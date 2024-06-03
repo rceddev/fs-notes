@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatToolbarModule }  from '@angular/material/toolbar'; 
 import { MatIconModule }  from '@angular/material/icon';
 
@@ -10,5 +10,11 @@ import { MatIconModule }  from '@angular/material/icon';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  @Output() toggleOptionsEvent = new EventEmitter();
+
+  toggleOptions() {
+    console.log("works!!");
+    this.toggleOptionsEvent.emit();
+  }
 
 }

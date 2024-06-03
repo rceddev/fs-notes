@@ -1,16 +1,18 @@
 <header>
     <mat-toolbar class="custom-mat-toolbar">
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-          <mat-icon>menu</mat-icon>
+        <button 
+            mat-icon-button class="example-icon" 
+            aria-label="Example icon-button with menu icon"
+            (click)="toggleOptions()">
+            <mat-icon>menu</mat-icon>
         </button>
         <span>FS Notes</span>
         <span class="example-spacer"></span>
         <button mat-icon-button class="example-icon" aria-label="Example icon-button with heart icon">
-          <mat-icon>more_vert</mat-icon>
+            <mat-icon>more_vert</mat-icon>
         </button>
         <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-          <mat-icon>settings</mat-icon>
+            <mat-icon>settings</mat-icon>
         </button>
-      </mat-toolbar>
-      
+    </mat-toolbar>
 </header>
