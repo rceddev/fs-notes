@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSidenavModule} from '@angular/material/sidenav';
 import { HeaderComponent } from "./components/header/header.component";
+import { OptionsComponent } from "./components/options/options.component";
 
 @Component({
     selector: 'app-root',
@@ -12,9 +14,18 @@ import { HeaderComponent } from "./components/header/header.component";
         RouterOutlet,
         MatSlideToggleModule,
         RouterLink,
-        HeaderComponent
+        HeaderComponent,
+        MatSidenavModule,
+        OptionsComponent
     ]
 })
 export class AppComponent {
+
   title = 'fs-web-app';
+  sideNaveOpened: boolean = false;
+
+  toogleSideNav() {
+    console.log("also works!!")
+    this.sideNaveOpened = !this.sideNaveOpened;
+  }
 }
