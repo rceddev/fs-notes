@@ -8,11 +8,46 @@
         </button>
         <span>FS Notes</span>
         <span class="example-spacer"></span>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with heart icon">
+
+        <!--More button-->
+        <button 
+            mat-icon-button 
+            class="example-icon" 
+            aria-label="Example icon-button with heart icon"
+            [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
         </button>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>add</mat-icon>
+              <span>New note</span>
+            </button>
+            <button mat-menu-item >
+              <mat-icon>download</mat-icon>
+              <span>Export my notes</span>
+            </button>
+        </mat-menu>
+        <!--Settings button-->
+        <button 
+            mat-icon-button 
+            class="example-icon" 
+            aria-label="Example icon-button with share icon"
+            [matMenuTriggerFor]="settings">
             <mat-icon>settings</mat-icon>
         </button>
+        <mat-menu #settings="matMenu">
+            <button mat-menu-item>
+              <mat-icon>logout</mat-icon>
+              <span>Log out</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>login</mat-icon>
+              <span>Log in</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>groups</mat-icon>
+              <span>About us</span>
+            </button>
+        </mat-menu>
     </mat-toolbar>
 </header>
