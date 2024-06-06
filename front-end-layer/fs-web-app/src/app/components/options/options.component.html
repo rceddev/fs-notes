@@ -1,9 +1,16 @@
-<nav id="drawer">
-    <ul>
-       <li><a routerLink="/home">home</a></li>
-       <li><a routerLink="/login">login</a></li>
-       <li><a routerLink="/register">register</a></li>
-       <li><a routerLink="/">panel</a></li>
-       <li><a routerLink="/user">user</a></li>
-    </ul>
- </nav>
+
+ <mat-nav-list>
+   <div mat-subheader>Options</div>
+   <a mat-list-item class="custom-list-item" routerLink="/home" (click)="itemSelected('home')" [activated]="idRoutes['home']">
+      <mat-icon matListItemIcon>home</mat-icon>
+      <div matListItemTitle>Home</div>
+   </a>
+   <a mat-list-item class="custom-list-item" routerLink="/" (click)="itemSelected('panel')" [activated]="idRoutes['panel']">
+      <mat-icon matListItemIcon>sticky_note_2</mat-icon>
+      <div matListItemTitle>Notes</div>
+   </a>
+   <a mat-list-item class="custom-list-item" routerLink="/user" (click)="itemSelected('user')" [activated]="idRoutes['user']">
+      <mat-icon matListItemIcon>person</mat-icon>
+      <div matListItemTitle>Profile</div>
+   </a>
+ </mat-nav-list>

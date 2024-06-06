@@ -20,12 +20,19 @@ import { OptionsComponent } from "./components/options/options.component";
     ]
 })
 export class AppComponent {
+  
 
   title = 'fs-web-app';
   sideNaveOpened: boolean = false;
 
   toogleSideNav() {
-    console.log("also works!!")
+    console.log("also works!!" + this.sideNaveOpened)
     this.sideNaveOpened = !this.sideNaveOpened;
+  }
+
+  closingSidNav() {
+    console.log("Closing sideNave")
+    if (this.sideNaveOpened != false)
+      this.sideNaveOpened = false; 
   }
 }
