@@ -32,7 +32,12 @@
   </div>
   <div class="section-content">
     <mat-sidenav-container class="example-container">
-      <mat-sidenav mode="push"  [opened]=sideNaveOpened>
+      <mat-sidenav  
+        autoFocus="false" 
+        mode="push" 
+        (closedStart)="closingSidNav()" 
+        [opened]=sideNaveOpened
+        >
         <app-options/>
       </mat-sidenav>
       <mat-sidenav-content>
