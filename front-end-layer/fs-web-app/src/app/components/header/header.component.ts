@@ -20,7 +20,6 @@ export class HeaderComponent {
   @Output() toggleOptionsEvent = new EventEmitter();
 
   toggleOptions() {
-    console.log("works!!");
     this.toggleOptionsEvent.emit();
   }
 
