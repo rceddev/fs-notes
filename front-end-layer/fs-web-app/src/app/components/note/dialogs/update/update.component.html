@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Update note</h2>
+<mat-dialog-content>
+    <mat-form-field  class="example-full-width">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="data.title" [value]="data.title">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Content</mat-label>
+        <textarea matInput [(ngModel)]="data.content">{{data.content}}</textarea>
+    </mat-form-field>
+    
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancelClicked()" cdkFocusInitial>Cancel</button>
+  <button mat-button [mat-dialog-close]="data">Update</button>
+</mat-dialog-actions>

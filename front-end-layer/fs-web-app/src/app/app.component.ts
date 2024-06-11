@@ -26,7 +26,6 @@ export class AppComponent {
   sideNaveOpened: boolean = false;
 
   toogleSideNav() {
-    console.log("also works!!" + this.sideNaveOpened)
     this.sideNaveOpened = !this.sideNaveOpened;
   }
 
