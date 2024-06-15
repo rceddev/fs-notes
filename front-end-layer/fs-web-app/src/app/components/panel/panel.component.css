@@ -2,4 +2,22 @@
     display: flex;
     flex-wrap: wrap-reverse;
     justify-content: center;
+    margin-bottom: 10%;
 }
+
+.example-flex-container{
+    z-index:5; 
+    position : fixed;
+    display : flex; 
+    align-self : flex-end;
+    bottom : 5%; 
+    margin-bottom : 28px;
+    width: 100%;
+    justify-content: end;
+}
+
+.example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 220px;
+  }

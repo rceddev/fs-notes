@@ -4,6 +4,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSidenavModule} from '@angular/material/sidenav';
 import { HeaderComponent } from "./components/header/header.component";
 import { OptionsComponent } from "./components/options/options.component";
+import { PanelComponent } from "./components/panel/panel.component";
 
 @Component({
     selector: 'app-root',
@@ -16,12 +17,11 @@ import { OptionsComponent } from "./components/options/options.component";
         RouterLink,
         HeaderComponent,
         MatSidenavModule,
-        OptionsComponent
+        OptionsComponent,
+        PanelComponent
     ]
 })
 export class AppComponent {
-  
-
   title = 'fs-web-app';
   sideNaveOpened: boolean = false;
 
@@ -34,4 +34,5 @@ export class AppComponent {
     if (this.sideNaveOpened != false)
       this.sideNaveOpened = false; 
   }
+
 }

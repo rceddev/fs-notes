@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Create note</h2>
+<mat-dialog-content>
+    <form [formGroup]="noteFormGroup">
+        <mat-form-field  class="example-full-width">
+            <mat-label>Title</mat-label>
+            <input 
+                matInput 
+                [(ngModel)]="data.title" 
+                formControlName="titleControlForm"
+                required>
+            @if (titleControlForm!=null && titleControlForm.hasError('required')) {
+                <mat-error>Title is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Content</mat-label>
+            <textarea 
+                matInput 
+                [(ngModel)]="data.content" 
+                formControlName="contentControlForm"></textarea>
+            @if (contentControlForm!=null && contentControlForm.hasError('required')) {
+                <mat-error>Content <strong>required</strong></mat-error>
+            }
+    </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancelClicked()" cdkFocusInitial>Cancel</button>
+  <button 
+    mat-button 
+    [mat-dialog-close]="data"
+    [disabled]="!noteFormGroup.valid">Create</button>
+</mat-dialog-actions>
