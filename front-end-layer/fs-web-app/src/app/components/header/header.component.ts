@@ -7,6 +7,7 @@ import { NoteService } from '../../services/note-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateComponent } from '../note/dialogs/create/create.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -22,10 +23,12 @@ import { CreateComponent } from '../note/dialogs/create/create.component';
 })
 export class HeaderComponent {
 
+
   constructor(
     private noteService: NoteService, 
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar) { }
+    private _snackBar: MatSnackBar,
+    private router: Router) { }
 
   @Output() toggleOptionsEvent = new EventEmitter();
 
@@ -50,5 +53,9 @@ export class HeaderComponent {
       this._snackBar.open(message, undefined, {
           duration: 3000
       });
+  }
+
+  navigate(route: string) {
+    this.router.navigateByUrl(route);
   }
 }
