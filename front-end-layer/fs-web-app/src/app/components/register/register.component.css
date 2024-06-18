@@ -1,0 +1,24 @@
+.card-container {
+    max-width: 25rem;
+    align-items: center;
+    padding: 0.25rem;
+  }
+.imput-full{
+    width: 100%;
+}
+
+.container{ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+mat-card-header{
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+}
+.submit-button{
+    width: 100%;
+    justify-content: end;
+    display: flex;
+}

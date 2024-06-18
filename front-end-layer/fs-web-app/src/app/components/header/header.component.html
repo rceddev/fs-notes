@@ -27,6 +27,7 @@
               <span>Export my notes</span>
             </button>
         </mat-menu>
+        
         <!--Settings button-->
         <button 
             mat-icon-button 
@@ -42,7 +43,11 @@
             </button>
             <button (click)="navigate('/login')" mat-menu-item>
               <mat-icon>login</mat-icon>
-              <span>Log in</span>
+              <span>Sign in</span>
+            </button>
+            <button (click)="navigate('/register')" mat-menu-item>
+              <mat-icon>person_add</mat-icon>
+              <span>Sign up</span>
             </button>
             <button mat-menu-item>
               <mat-icon>groups</mat-icon>
