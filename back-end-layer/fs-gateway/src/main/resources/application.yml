@@ -1,0 +1,25 @@
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+    name: fs-gateway
+server:
+  port: '8766'
+cloud:
+  jwt:
+    key: 64AC565FE9214F68BF655659DECB864AC565FE9214F68BF655659DECB8
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE

@@ -1,5 +1,6 @@
 package com.rree.fsnotes.auth.service;
 
+import com.rree.fsnotes.auth.exception.CustomExceptionHandler;
 import com.rree.fsnotes.auth.model.*;
 import com.rree.fsnotes.auth.restclients.FSPersistanceClient;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,7 +44,14 @@ public class AuthService {
     Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     public AuthLoginResponse login(LoginRequest loginRequest){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        }catch (BadCredentialsException e){
+            logger.info("AUTH-ERROR: " + e.getMessage());
+            throw new CustomExceptionHandler.WrongPasswordException(e.getMessage());
+        }
+
+        //TODO: Check if double check to the database its needed to gen the userDetails
         UserDetails userToLogin = persistanceClient.getUserByEmail(loginRequest.getEmail());
         String token = jwtService.getToken(userToLogin);
         return AuthLoginResponse.builder()
