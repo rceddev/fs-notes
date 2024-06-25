@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateComponent } from '../note/dialogs/create/create.component';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -28,9 +29,12 @@ export class HeaderComponent {
     private noteService: NoteService, 
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private router: Router) { }
+    private router: Router,
+    private userService: UserService) { }
 
   @Output() toggleOptionsEvent = new EventEmitter();
+
+  isUserLoggedON = false;
 
   toggleOptions() {
     this.toggleOptionsEvent.emit();
@@ -57,5 +61,16 @@ export class HeaderComponent {
 
   navigate(route: string) {
     this.router.navigateByUrl(route);
+  }
+
+  ngOnInit(){
+    this.userService.isUserLogedIn.subscribe(
+      {
+        next: (userLoggedON) => {
+          this.isUserLoggedON = userLoggedON;
+        }
+      }
+    );
+    this.isUserLoggedON = sessionStorage.getItem('loggedOn') != null ? true : false;
   }
 }

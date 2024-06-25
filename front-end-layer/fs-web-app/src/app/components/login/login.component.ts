@@ -15,6 +15,8 @@ import {MatButtonModule} from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
+import { UserLogin, UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -36,6 +38,9 @@ import {MatDividerModule} from '@angular/material/divider';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
+  constructor(private userService: UserService, private router: Router){}
+
   loginFormGroup = new FormGroup({
     emailFormControl : new FormControl('', [Validators.required, Validators.email]),
     passWordFormControl : new FormControl('', [Validators.required])
@@ -43,6 +48,21 @@ export class LoginComponent {
 
   handleSubmit() {
     console.log("Email:" + this.loginFormGroup.value.emailFormControl + ", password:" + this.loginFormGroup.value.passWordFormControl)
+    
+    let loginRequestBody: UserLogin = {
+      password: this.loginFormGroup.value.passWordFormControl!,
+      email: this.loginFormGroup.value.emailFormControl!
+    }
+
+    this.userService.login(loginRequestBody).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      complete: () => {
+        this.router.navigate(['']);
+      }
+    });
+
   }
 
   get emailFormControl(){

@@ -37,10 +37,12 @@
             <mat-icon>settings</mat-icon>
         </button>
         <mat-menu #settings="matMenu">
+          @if (isUserLoggedON) {
             <button mat-menu-item>
               <mat-icon>logout</mat-icon>
               <span>Log out</span>
             </button>
+          }@else {
             <button (click)="navigate('/login')" mat-menu-item>
               <mat-icon>login</mat-icon>
               <span>Sign in</span>
@@ -49,10 +51,11 @@
               <mat-icon>person_add</mat-icon>
               <span>Sign up</span>
             </button>
-            <button mat-menu-item>
-              <mat-icon>groups</mat-icon>
-              <span>About us</span>
-            </button>
+          }
+          <button mat-menu-item>
+            <mat-icon>groups</mat-icon>
+            <span>About us</span>
+          </button>
         </mat-menu>
     </mat-toolbar>
 </header>
