@@ -39,7 +39,8 @@ export const routes: Routes = [
     {
         path: 'register',
         title: 'Register Page',
-        component: RegisterComponent
+        component: RegisterComponent,
+        canActivate: [userLoggedOnGuard]    
     },
     {
         path: 'user',

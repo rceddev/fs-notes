@@ -1,6 +1,7 @@
 package com.rree.fsnotes.persistance.service;
 
 
+import com.rree.fsnotes.persistance.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -22,14 +23,21 @@ public class UserService {
 				.orElseThrow(() -> new CustomExceptionHandler.UserNotFoundException("id:" + id + " Not found"));
 	}
 	
-	public ResponseEntity<User> saveUser(User user) {
+	public ResponseEntity<UserModel> saveUser(User user) {
 		User savedUser;
 		try {
 			savedUser = userRepository.save(user);
 		}catch(DataIntegrityViolationException e) {
-			throw new CustomExceptionHandler.UserAlreaydExistsException("User: " + user.getEmail() + "already exists");
+			throw new CustomExceptionHandler.UserAlreaydExistsException("User: " + user.getEmail() + " already exists");
 		}
-		return new ResponseEntity<>(savedUser, 	HttpStatus.OK);
+
+		UserModel responseUser = UserModel.builder()
+				.firstName(savedUser.getFirstName())
+				.lastName(savedUser.getLastName())
+				.email(savedUser.getEmail())
+				.id(savedUser.getId())
+				.build();
+		return new ResponseEntity<>(responseUser, 	HttpStatus.OK);
 		
 	}
 

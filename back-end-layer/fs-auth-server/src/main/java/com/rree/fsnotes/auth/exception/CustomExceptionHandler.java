@@ -24,6 +24,26 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<FSAuthExceptionMessage>(errorException, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(ServerErrorException.class)
+    public final ResponseEntity<FSAuthExceptionMessage> handleServerErrorException(Exception ex, WebRequest request) throws  Exception {
+        FSAuthExceptionMessage errorException = new FSAuthExceptionMessage(
+                FSAuthExceptionMessage.SERVER_ERROR, ex.getMessage());
+        return new ResponseEntity<FSAuthExceptionMessage>(errorException, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public final ResponseEntity<FSAuthExceptionMessage> handleUserAlreadyExistException(Exception ex, WebRequest request) throws  Exception {
+        FSAuthExceptionMessage errorException = new FSAuthExceptionMessage(
+                FSAuthExceptionMessage.USER_ALREADY_EXIST_CODE, FSAuthExceptionMessage.USER_ALREADY_EXIST_MESSAGE);
+        return new ResponseEntity<FSAuthExceptionMessage>(errorException, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(FSBadRequestException.class)
+    public final ResponseEntity<FSAuthExceptionMessage> badRequestException(Exception ex, WebRequest request) throws  Exception {
+        FSAuthExceptionMessage errorException = new FSAuthExceptionMessage(
+                FSAuthExceptionMessage.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<FSAuthExceptionMessage>(errorException, HttpStatus.BAD_REQUEST);
+    }
 
     public static class EmailNotFoundException extends RuntimeException{
         private static final long serialVersionUID = 1L;
@@ -34,5 +54,22 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         private static final long serialVersionUID = 1L;
 
         public WrongPasswordException(String message){super(message);}
+    }
+
+    public static class ServerErrorException extends RuntimeException{
+        private static final long serialVersionUID = 1L;
+
+        public ServerErrorException(String message){super(message);}
+    }
+
+    public static class UserAlreadyExistException extends RuntimeException{
+        private static final long serialVersionUID = 1L;
+
+        public UserAlreadyExistException(String message){super(message);}
+    }
+
+    public static class FSBadRequestException extends RuntimeException{
+        private static final long serialVersionUID = 1L;
+        public FSBadRequestException(String message){super(message);}
     }
 }

@@ -27,10 +27,13 @@ public class FeignErrorDecoder implements ErrorDecoder {
             return new Exception(e.getMessage());
         }
         return switch (response.status()) {
-            case 404 -> new CustomExceptionHandler.EmailNotFoundException(message.message);
+            case 400 -> new CustomExceptionHandler.FSBadRequestException(message.message);
             case 401 -> new NotAllowedException(message.message);
+            case 404 -> new CustomExceptionHandler.EmailNotFoundException(message.message);
             case 403 -> new ForbiddenException(message.message);
-            default -> new ServerErrorException(message.message, response.status());
+            case 409 -> new CustomExceptionHandler.UserAlreadyExistException(message.message);
+            default -> new CustomExceptionHandler.ServerErrorException(message.message);
+
         };
     }
 

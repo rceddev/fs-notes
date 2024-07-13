@@ -66,8 +66,16 @@ public class AuthService {
                 .lastName(registerRequest.getLastName())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .build();
+        User userRegistered = persistanceClient.registUser(userToRegister);
+        UserModel userModel = UserModel.builder()
+                .id(userRegistered.getId())
+                .email(userRegistered.getEmail())
+                .firstName(userToRegister.getFirstName())
+                .lastName(userRegistered.getLastName())
+                .build();
+
         return AuthResponse.builder()
-                .user(persistanceClient.registUser(userToRegister))
+                .user(userModel)
                 .token(jwtService.getToken(userToRegister))
                 .build();
     }

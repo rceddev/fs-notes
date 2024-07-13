@@ -1,6 +1,7 @@
 package com.rree.fsnotes.persistance.controller;
 
 import com.rree.fsnotes.persistance.entity.User;
+import com.rree.fsnotes.persistance.model.UserModel;
 import com.rree.fsnotes.persistance.service.UserService;
 import com.rree.fsnotes.persistance.utils.AuthValidationService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class SecureUserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> saveUser(@Valid @RequestBody User user, HttpServletRequest request) {
+    public ResponseEntity<UserModel> saveUser(@Valid @RequestBody User user, HttpServletRequest request) {
         return userService.saveUser(user);
     }
 }

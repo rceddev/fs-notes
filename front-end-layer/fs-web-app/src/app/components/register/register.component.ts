@@ -18,6 +18,8 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
+import { UserRegister, UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 
 export const passMatch: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -46,7 +48,10 @@ export const passMatch: ValidatorFn = (control: AbstractControl): ValidationErro
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  loginFormGroup = new FormGroup({
+
+  constructor(private userService: UserService, private router: Router ){}
+
+  registerFormGroup = new FormGroup({
     emailFormControl : new FormControl('', [Validators.required, Validators.email]),
     passWordFormControl : new FormControl('', [Validators.required]),
     repeatPassWordFormControl : new FormControl('', [Validators.required]),
@@ -55,25 +60,42 @@ export class RegisterComponent {
   }, {validators: passMatch});
 
   handleSubmit() {
-    console.log("Email:" + this.loginFormGroup.value.emailFormControl + ", password:" + this.loginFormGroup.value.passWordFormControl)
+    console.log("Email:" + this.registerFormGroup.value.emailFormControl + ", password:" + this.registerFormGroup.value.passWordFormControl)
+
+    let registerBody : UserRegister = {
+      firstName: this.registerFormGroup.value.nameFormControl!,
+      lastName: this.registerFormGroup.value.lastNameFormControl!,
+      password: this.registerFormGroup.value.passWordFormControl!,
+      email: this.registerFormGroup.value.emailFormControl!
+    }
+
+    this.userService.register(registerBody).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      complete: () => {
+        this.router.navigate(['']);
+      }
+    });
+
   }
 
   get emailFormControl(){
-    return this.loginFormGroup.get('emailFormControl');
+    return this.registerFormGroup.get('emailFormControl');
   }
 
   get passWordFormControl(){
-    return this.loginFormGroup.get('passWordFormControl');
+    return this.registerFormGroup.get('passWordFormControl');
   }
 
   get repeatPassWordFormControl(){
-    return this.loginFormGroup.get('repeatPassWordFormControl');
+    return this.registerFormGroup.get('repeatPassWordFormControl');
   }
 
   get nameFormControl(){
-    return this.loginFormGroup.get('nameFormControl');
+    return this.registerFormGroup.get('nameFormControl');
   }
   get lastNameFormControl(){
-    return this.loginFormGroup.get('lastNameFormControl');
+    return this.registerFormGroup.get('lastNameFormControl');
   }
 }
