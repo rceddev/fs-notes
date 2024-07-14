@@ -81,6 +81,11 @@ export class UserService {
     )
   }
 
+  logout():void{
+    this.isUserLogedIn.next(false);
+    sessionStorage.clear();
+  }
+
   private errorHandler(errorResponse: HttpErrorResponse){
 
 
