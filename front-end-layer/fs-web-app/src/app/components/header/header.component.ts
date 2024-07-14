@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateComponent } from '../note/dialogs/create/create.component';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { LogoutComponent } from './dialogs/logout/logout.component';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,6 @@ import { UserService } from '../../services/user.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-
 
   constructor(
     private noteService: NoteService, 
@@ -61,6 +61,17 @@ export class HeaderComponent {
 
   navigate(route: string) {
     this.router.navigateByUrl(route);
+  }
+
+  logout() {
+    const dialogSignOut = this.dialog.open(LogoutComponent);
+
+    dialogSignOut.afterClosed().subscribe(result=> {
+      if (result) {
+        this.userService.logout();
+        this.navigate('/home')
+      }
+    });
   }
 
   ngOnInit(){
